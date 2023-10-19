@@ -9,7 +9,7 @@
  * 当遇到非法表达式时，输出错误信息并退出程序。
  */
 void err_exp(){
-    std::cout << "Illegal Expressions!" << std::endl;
+    std::cout << "\nError!" << std::endl;
     exit(-1);
 }
 
@@ -58,12 +58,19 @@ bool ispoint(char op){
  * @return 如果括号合法，返回 true，否则返回 false
  */
 bool bracketCheck(std::string str){
+    int lcount = 0,rcount = 0;
     bool result = true;
     char ch=' ',leftch = ' ',rightch=' ';
     // 括号栈
     std::stack<char> bracketStack;
     for(int i=0; i < str.length(); i++){
         ch = str[i];
+        if(ch == '('){
+            lcount += 1;
+        }
+        if(ch == ')'){
+            rcount += 1;
+        }
 
         // 两端分别判断
         if(i == 0){
@@ -105,8 +112,13 @@ bool bracketCheck(std::string str){
             }
         }
     }
+    if(lcount != rcount){
+        result = false;
+    }
     return result;
 }
+
+
 
 /**
  * @brief 操作符处理函数
@@ -124,6 +136,9 @@ bool opCheck(std::string& str){
                 break;
             }
         }
+    }
+    if(isFourOp(str[str.length()-1])){
+        result = false;
     }
     return result;
 }
@@ -154,6 +169,7 @@ std::string strPreproce(std::string infix){
     if(opCheck(preInfix) != true){
         err_exp();
     }
+
     infix = preInfix;
     return infix;
 }
@@ -223,6 +239,14 @@ std::queue<std::string> strToQueue(std::string infix){
             continue;
         }
     }
+    while (!result.empty())
+    {
+        std::cout<<result.front();
+        result.pop();
+    }
+    std::cout<<" "<<std::endl;
 
+
+    
     return fixedResult;
 }

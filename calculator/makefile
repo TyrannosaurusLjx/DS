@@ -21,6 +21,6 @@ report: report.pdf
 
 clean:
 	rm -f $(EXECUTABLE)
-	rm -f *.aux *.log *.out *.pdf
+	rm -f *.aux *.log *.out *.pdf *.synctex.gz
 
 .PHONY: all clean report

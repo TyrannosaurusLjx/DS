@@ -35,8 +35,10 @@ bool ispoint(char op){
 }
 
 // 括号处理
-bool bracketCheck(std::string& str){
+bool bracketCheck(std::string str){
+    bool result = true;
     char ch=' ',leftch = ' ',rightch=' ';
+    // 括号栈
     std::stack<char> bracketStack;
     for(int i=0; i < str.length(); i++){
         ch = str[i];
@@ -45,12 +47,14 @@ bool bracketCheck(std::string& str){
         if(i == 0){
             rightch = str[i+1];
             if(ch == ')' || rightch == '*' || rightch == '/' || ispoint(rightch) || rightch == ')'){
-                err_exp();
+                result = false;
+                break;
             }
         }else if(i == str.length()-1){
             leftch = str[i-1];
-            if(ch == '(' || !(isdigit(leftch) || leftch == ')')){
-                err_exp();
+            if(ch == '(' || (ch == ')' && !(isdigit(leftch) || leftch == ')') )){
+                result = false;
+                break;
             }
         }
         
@@ -60,38 +64,65 @@ bool bracketCheck(std::string& str){
         // 括号左右不合法处理
         if(ch == '('){
             if(isdigit(leftch) || ispoint(leftch) || leftch == ')' || rightch == '*' || rightch == '/' || ispoint(rightch) || rightch == ')'){
-                err_exp();
+                result = false;
+                break;
             }else{
                 bracketStack.push(ch);
             }
         }else if(ch == ')'){
             if(!(isdigit(leftch) || leftch == ')') || rightch == '(' || isdigit(rightch) || ispoint(rightch)){
-                err_exp();
+                result = false;
+                break;
             }else{
                 if( !bracketStack.empty() && bracketStack.top() == '('){
                     bracketStack.pop();
                 }else{
-                    err_exp();
+                    result = false;
+                    break;
                 }
             }
         }
     }
-    return true;
+    return result;
 }
 
 // 操作符处理
 bool opCheck(std::string& str){
+    bool result = true;
     char ch;
-    for(int i = 0; i < str.length()-2; i++){
+    for(int i = 0; i < str.length(); i++){
         ch = str[i];
         if(isFourOp(ch)){
             if(isFourOp(str[i+1])){
-                err_exp();
+                result = false;
+                break;
             }
         }
     }
-    return true;
+    return result;
 }
+
+// 小数点
+// bool isDecimalValid(const std::string& str) {  
+//     int dotCount = 0;  
+//     int dotIndex = -1;  
+  
+//     for (int i = 0; i < str.length(); i++) {  
+//         if (str[i] == '.') {  
+//             dotCount++;  
+//             dotIndex = i;  
+//         }  
+//     }  
+  
+//     // 判断小数点的数量和位置是否符合预期规则  
+//     if (dotCount == 1 && dotIndex > 0 && dotIndex < str.length() - 1) {  
+//         return false;  
+//     } else {  
+//         return true;  
+//     }  
+// }  
+
+
 
 // 总判断函数
 std::string strPreproce(std::string infix){
@@ -106,6 +137,7 @@ std::string strPreproce(std::string infix){
             continue;
         }
     }
+
     // 检查括号合法性
     if(bracketCheck(preInfix) != true){
         err_exp();
@@ -114,8 +146,43 @@ std::string strPreproce(std::string infix){
     if(opCheck(preInfix) != true){
         err_exp();
     }
-
-    
+    // // 小数点
+    // if(isDecimalValid(preInfix) != true){
+    //     err_exp();
+    // }
     infix = preInfix;
     return infix;
 }
+
+// 字符串转queue
+std::queue<std::string> strToQueue(std::string infix){
+    std::queue<std::string> result;
+    std::string item;
+    bool atNum = true;
+    char ch;
+    for(int i = 0; i < infix.length(); i++){
+        ch = infix[i];
+        
+        if(isop(ch)){
+            atNum = false;
+        }else{
+            atNum = true;
+        }
+        if(atNum){
+            item += ch;
+        }else{
+            if(item != ""){
+                result.push(item);
+            }
+            item = "";
+            result.push(std::string (1,ch));
+        }
+    }
+    // 最后一个字母
+    if(atNum){
+        result.push(std::string (1,ch));
+    }
+
+    return result;
+}
+

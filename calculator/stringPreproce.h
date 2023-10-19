@@ -46,7 +46,7 @@ bool bracketCheck(std::string str){
         // 两端分别判断
         if(i == 0){
             rightch = str[i+1];
-            if(ch == ')' || rightch == '*' || rightch == '/' || ispoint(rightch) || rightch == ')'){
+            if(ch == ')' || ispoint(ch) || ch == '*' || ch == '/' ||  (ch == '(') && (rightch == ')' || rightch == '.' || rightch == '*' || rightch == '/') || (ch == '+' || ch == '-') && !(isdigit(rightch))  ){
                 result = false;
                 break;
             }
@@ -102,28 +102,6 @@ bool opCheck(std::string& str){
     return result;
 }
 
-// 小数点
-// bool isDecimalValid(const std::string& str) {  
-//     int dotCount = 0;  
-//     int dotIndex = -1;  
-  
-//     for (int i = 0; i < str.length(); i++) {  
-//         if (str[i] == '.') {  
-//             dotCount++;  
-//             dotIndex = i;  
-//         }  
-//     }  
-  
-//     // 判断小数点的数量和位置是否符合预期规则  
-//     if (dotCount == 1 && dotIndex > 0 && dotIndex < str.length() - 1) {  
-//         return false;  
-//     } else {  
-//         return true;  
-//     }  
-// }  
-
-
-
 // 总判断函数
 std::string strPreproce(std::string infix){
     std::string preInfix;
@@ -140,16 +118,14 @@ std::string strPreproce(std::string infix){
 
     // 检查括号合法性
     if(bracketCheck(preInfix) != true){
+        printf("kuohao");
         err_exp();
     }
     // 检查运算合法性
     if(opCheck(preInfix) != true){
+        printf("yunsuan");
         err_exp();
     }
-    // // 小数点
-    // if(isDecimalValid(preInfix) != true){
-    //     err_exp();
-    // }
     infix = preInfix;
     return infix;
 }

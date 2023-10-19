@@ -213,8 +213,8 @@ std::queue<std::string> strToQueue(std::string infix){
 
         if(s1 == "(" && !result.empty()){
             s2 = result.front();
-            result.pop();
             if(s2 == "-"){
+                result.pop();
                 s3 = result.front();
                 result.pop();
                 fixedResult.push(s2 + s3);
@@ -223,5 +223,6 @@ std::queue<std::string> strToQueue(std::string infix){
             continue;
         }
     }
+
     return fixedResult;
 }

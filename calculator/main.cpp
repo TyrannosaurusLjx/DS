@@ -86,9 +86,10 @@ int main(int argc, char* argv[]){
     }
 
     double result = evalPostfix(Postfix);
-    std::cout << result << std::endl;
+    std::cout <<"result=" <<result;
 
     // 输出后缀表达式
+    std::cout<<"  the Postfix is: ";
     while(!Postfix.empty()){
         std::cout << Postfix.front() << " ";
         Postfix.pop();

@@ -3,21 +3,34 @@
 #include <string>
 #include <cctype>
 
-// 错误提示函数
+/**
+ * @brief 错误提示函数
+ *
+ * 当遇到非法表达式时，输出错误信息并退出程序。
+ */
 void err_exp(){
-    std::cout<<"Illegal Expressions!"<<std::endl;
+    std::cout << "Illegal Expressions!" << std::endl;
     exit(-1);
-    }
+}
 
-// 数据预处理函数
+/**
+ * @brief 判断字符是否是操作符
+ * @param op 要检查的字符
+ * @return 如果字符是操作符，则返回 true，否则返回 false
+ */
 bool isop(char op){
     if(op == '+' || op == '-' || op == '*' || op == '/' || op == '(' || op == ')'){
         return true;
     }else{
         return false;
     }
-};
+}
 
+/**
+ * @brief 判断字符是否是四则运算符
+ * @param ch 要检查的字符
+ * @return 如果字符是四则运算符但不是括号，则返回 true，否则返回 false
+ */
 bool isFourOp(char ch){
     if(isop(ch) && ch != '(' && ch != ')'){
         return true;
@@ -26,6 +39,11 @@ bool isFourOp(char ch){
     }
 }
 
+/**
+ * @brief 判断字符是否是小数点
+ * @param op 要检查的字符
+ * @return 如果字符是小数点，则返回 true，否则返回 false
+ */
 bool ispoint(char op){
     if(op == '.'){
         return true;
@@ -34,7 +52,11 @@ bool ispoint(char op){
     }
 }
 
-// 括号处理
+/**
+ * @brief 括号处理函数
+ * @param str 要检查的字符串
+ * @return 如果括号合法，返回 true，否则返回 false
+ */
 bool bracketCheck(std::string str){
     bool result = true;
     char ch=' ',leftch = ' ',rightch=' ';
@@ -86,7 +108,11 @@ bool bracketCheck(std::string str){
     return result;
 }
 
-// 操作符处理
+/**
+ * @brief 操作符处理函数
+ * @param str 输入的字符串
+ * @return 如果操作符合法，返回 true，否则返回 false
+ */
 bool opCheck(std::string& str){
     bool result = true;
     char ch;
@@ -102,11 +128,15 @@ bool opCheck(std::string& str){
     return result;
 }
 
-// 总判断函数
+/**
+ * @brief 总判断函数
+ * @param infix 输入的中缀表达式
+ * @return 经过预处理的表达式
+ */
 std::string strPreproce(std::string infix){
     std::string preInfix;
     char ch;
-    // 处理除了op,'.'和num以外的字符
+    // 处理除了操作符、小数点和数字以外的字符
     for(int i=0; i < infix.length(); i++){
         ch = infix[i];
         if(isdigit(ch) || ispoint(ch) || isop(ch)){
@@ -118,27 +148,31 @@ std::string strPreproce(std::string infix){
 
     // 检查括号合法性
     if(bracketCheck(preInfix) != true){
-        printf("kuohao");
         err_exp();
     }
     // 检查运算合法性
     if(opCheck(preInfix) != true){
-        printf("yunsuan");
         err_exp();
     }
     infix = preInfix;
     return infix;
 }
 
-// 字符串转queue
+/**
+ * @brief 将字符串转换为队列
+ *
+ * 此函数将输入的中缀表达式字符串转化为队列，以便后续处理。
+ *
+ * @param infix 输入的中缀表达式字符串
+ * @return 转化后的队列
+ */
 std::queue<std::string> strToQueue(std::string infix){
-    std::queue<std::string> result;
+    std::queue<std::string> result, fixedResult;
     std::string item;
     bool atNum = true;
     char ch;
     for(int i = 0; i < infix.length(); i++){
         ch = infix[i];
-        
         if(isop(ch)){
             atNum = false;
         }else{
@@ -151,14 +185,43 @@ std::queue<std::string> strToQueue(std::string infix){
                 result.push(item);
             }
             item = "";
-            result.push(std::string (1,ch));
+            result.push(std::string(1, ch));
         }
     }
-    // 最后一个字母
+    // 处理最后一个字母
     if(atNum){
-        result.push(std::string (1,ch));
+        result.push(std::string(1, ch));
+    }
+    // 处理负数
+    std::string s1, s2, s3;
+    if(result.front() == "-"){
+        s1 = result.front();
+        result.pop();
+        if(result.empty()){
+            err_exp();
+        }else{
+            s2 = result.front();
+            result.pop();
+        }
+        fixedResult.push(s1 + s2);
     }
 
-    return result;
-}
+    while(!result.empty()){
+        s1 = result.front();
+        result.pop();
+        fixedResult.push(s1);
 
+        if(s1 == "(" && !result.empty()){
+            s2 = result.front();
+            result.pop();
+            if(s2 == "-"){
+                s3 = result.front();
+                result.pop();
+                fixedResult.push(s2 + s3);
+            }
+        }else{
+            continue;
+        }
+    }
+    return fixedResult;
+}

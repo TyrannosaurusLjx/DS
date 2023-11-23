@@ -1,11 +1,16 @@
 # include<iostream>
-# include "Tree.h"
+# include "BST.h"
+
 
 int main(){
 
-    BinaryTree<int> T;
-
+    BinarySearchTree<int> T;
+    T.insert(2);
+    T.insert(6);    
     T.printTree();
+
+
+
 
     
 

@@ -83,9 +83,9 @@ class BinaryTree
     }
 
 
-//   protected:
-    class BinaryNode
-    {
+
+    struct BinaryNode
+    { 
         Comparable element;
         BinaryNode *left;
         BinaryNode *right;

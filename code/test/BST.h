@@ -5,7 +5,7 @@ class BinarySearchTree: public BinaryTree<Comparable>
 {
   public:
 
-
+    
 
 
     /**
@@ -66,7 +66,7 @@ class BinarySearchTree: public BinaryTree<Comparable>
 
   private:
     
-
+    using BinaryTree<Comparable>::BinaryNode;
 
     /**
      * Internal method to insert into a subtree.

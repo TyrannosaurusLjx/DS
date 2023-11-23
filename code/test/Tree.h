@@ -1,87 +1,119 @@
-#ifndef TREE
-#define TREE
+#include <algorithm>
 
-#include <iostream>
-
-class BinaryNode; 
 template <typename Comparable>
-
 class BinaryTree
 {
   public:
-    BinaryTree() : root{nullptr;} {}
+    BinaryTree( ): root {nullptr}{}
+
+    /**
+     * Copy constructor
+     */
+    BinaryTree( const BinaryTree & rhs ) : root{ nullptr }
+    {
+        root = clone( rhs.root );
+    }
 
 
-    ~BinaryTree(){
+    /**
+     * Move constructor
+     */
+    BinaryTree( BinaryTree && rhs ) : root{ rhs.root }
+    {
+        rhs.root = nullptr;
+    }
+
+    /**
+     * Copy assignment
+     */
+    BinaryTree & operator=( const BinaryTree & rhs )
+    {
+        BinaryTree copy = rhs;
+        std::swap( *this, copy );
+        return *this;
+    }
+        
+    
+
+    ~BinaryTree( )
+    {
       makeEmpty();
     }
 
-  // makeEmpty
-  void makeEmpty()
-  {
-    makeEmpty( root );
-  }
+    // makeempty
+    void makeEmpty()
+    {
+      makeEmpty( root );
+    }
+    
+    //printTree
+    void printTree()
+    {
+      printTree( root , out);
+    }
 
-  // printTree
-  void printTree()
-  {
-    printTree( root );
-  }
-
-  void err( std::string s ){
-    std::cout<<"something get wrong, "<< s << std::endl;
-  }
+    // is empty?
+    bool isEmpty()
+    {
+      return root == nullptr;
+    }
 
   private:
-  // def BinaryNode here
     struct BinaryNode
     {
       Comparable element;
-      BinaryNode *left;
-      BinaryNode *right;
-      
-      // 左值引用
-      BinaryNode (const Comparable & theelement, BinaryNode *lt, BinaryNode *rt)
-        {
-           element ( theelement ); left ( lt ); right ( rt ) ;
-        }
-      // 右值引用
-      BinaryNode (Comparable && theelement, BinaryNode *lt, BinaryNode *rt)
-        : element ( std::move( theelement ) ), left ( lt ), right ( rt ) {}
+      BinaryNode * left;
+      BinaryNode * right;
+
+      BinaryNode( const Comparable & theelement, BinaryNode *& lt, BinaryNode *& rt)
+      :element{ theelement }, left{ lt }, right{ rt }{}
+
+      BinaryNode( Comparable && theelement, BinaryNode *& lt, BinaryNode *& rt)
+      :element{ std::move(theelement) }, left{ lt }, right{ rt }{}
+    
     };
 
-  // get root BinaryNode
+    // tree root
+    BinaryNode root;
 
-  BinaryNode *root;
-
-  // make empty
-  void makeEmpty( BinaryNode * & t )
-  {
-    if( t != nullptr)
+    void makeEmpty( BinaryNode * & t )
     {
-      makeEmpty( t->left );
-      makeEmpty( t->right );
-      delete t;
-    }
-    t = nullptr;
-  }
-
-  void printTree( BinaryNode *t) const
-  {
       if( t != nullptr )
       {
-          printTree( t->left );
-          std::cout << t->element << std::endl;
-          printTree( t->right );
+        makeEmpty( t->left );
+        makeEmpty( t->right );
+        delete t;
       }
-  }
-
-
-}; 
-
+      t = nullptr;
+    }
 
 
 
+    void printTree( BinaryNode *t, ostream & out ) const
+    {
+        if( t != nullptr )
+        {
+            printTree( t->left, out );
+            out << t->element << endl;
+            printTree( t->right, out );
+        }
+    }
+
+    /**
+     * Internal method to clone subtree.
+     */
+    BinaryNode * clone( BinaryNode *t ) const
+    {
+        if( t == nullptr )
+            return nullptr;
+        else
+            return new BinaryNode{ t->element, clone( t->left ), clone( t->right ) };
+    }
+
+
+    
+
+};
 
 
 
@@ -102,9 +134,3 @@ class BinaryTree
 
 
 
-
-
-
-
-
-#endif //TREE

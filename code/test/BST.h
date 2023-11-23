@@ -1,34 +1,39 @@
 #include "BT.h"
+# include <algorithm>
+# include "../dsexceptions.h"
 
 template <typename Comparable>
 class BinarySearchTree: public BinaryTree<Comparable>
 {
   public:
 
-    
+    using typename BinaryTree<Comparable>::BinaryNode;
+    using BinaryTree<Comparable>::root;
+    using BinaryTree<Comparable>::isEmpty;
+
 
 
     /**
      * Find the smallest item in the tree.
      * Throw UnderflowException if empty.
      */
-    // const Comparable & findMin( ) const
-    // {
-    //     if( isEmpty( ) )
-    //         throw UnderflowException{ };
-    //     return findMin( root )->element;
-    // }
+    const Comparable & findMin( ) const
+    {
+        if( isEmpty( ) )
+            throw UnderflowException{ };
+        return findMin( root )->element;
+    }
 
     /**
      * Find the largest item in the tree.
      * Throw UnderflowException if empty.
      */
-    // const Comparable & findMax( ) const
-    // {
-    //     if( isEmpty( ) )
-    //         throw UnderflowException{ };
-    //     return findMax( root )->element;
-    // }
+    const Comparable & findMax( ) const
+    {
+        if( isEmpty( ) )
+            throw UnderflowException{ };
+        return findMax( root )->element;
+    }
 
     /**
      * Returns true if x is found in the tree.
@@ -50,23 +55,23 @@ class BinarySearchTree: public BinaryTree<Comparable>
     /**
      * Insert x into the tree; duplicates are ignored.
      */
-    // void insert( Comparable && x )
-    // {
-    //     insert( std::move( x ), root );
-    // }
+    void insert( Comparable && x )
+    {
+        insert( std::move( x ), root );
+    }
 
     /**
      * Remove x from the tree. Nothing is done if x is not found.
      */
-    // void remove( const Comparable & x )
-    // {
-    //     remove( x, root );
-    // }
+    void remove( const Comparable & x )
+    {
+        remove( x, root );
+    }
 
 
   private:
     
-    using BinaryTree<Comparable>::BinaryNode;
+
 
     /**
      * Internal method to insert into a subtree.
@@ -110,51 +115,51 @@ class BinarySearchTree: public BinaryTree<Comparable>
      * t is the node that roots the subtree.
      * Set the new root of the subtree.
      */
-    // void remove( const Comparable & x, BinaryNode * & t )
-    // {
-    //     if( t == nullptr )
-    //         return;   // Item not found; do nothing
-    //     if( x < t->element )
-    //         remove( x, t->left );
-    //     else if( t->element < x )
-    //         remove( x, t->right );
-    //     else if( t->left != nullptr && t->right != nullptr ) // Two children
-    //     {
-    //         t->element = findMin( t->right )->element;
-    //         remove( t->element, t->right );
-    //     }
-    //     else
-    //     {
-    //         BinaryNode *oldNode = t;
-    //         t = ( t->left != nullptr ) ? t->left : t->right;
-    //         delete oldNode;
-    //     }
-    // }
+    void remove( const Comparable & x, BinaryNode * & t )
+    {
+        if( t == nullptr )
+            return;   // Item not found; do nothing
+        if( x < t->element )
+            remove( x, t->left );
+        else if( t->element < x )
+            remove( x, t->right );
+        else if( t->left != nullptr && t->right != nullptr ) // Two children
+        {
+            t->element = findMin( t->right )->element;
+            remove( t->element, t->right );
+        }
+        else
+        {
+            BinaryNode *oldNode = t;
+            t = ( t->left != nullptr ) ? t->left : t->right;
+            delete oldNode;
+        }
+    }
 
     /**
      * Internal method to find the smallest item in a subtree t.
      * Return node containing the smallest item.
      */
-    // BinaryNode * findMin( BinaryNode *t ) const
-    // {
-    //     if( t == nullptr )
-    //         return nullptr;
-    //     if( t->left == nullptr )
-    //         return t;
-    //     return findMin( t->left );
-    // }
+    BinaryNode * findMin( BinaryNode *t ) const
+    {
+        if( t == nullptr )
+            return nullptr;
+        if( t->left == nullptr )
+            return t;
+        return findMin( t->left );
+    }
 
     /**
      * Internal method to find the largest item in a subtree t.
      * Return node containing the largest item.
      */
-    // BinaryNode * findMax( BinaryNode *t ) const
-    // {
-    //     if( t != nullptr )
-    //         while( t->right != nullptr )
-    //             t = t->right;
-    //     return t;
-    // }
+    BinaryNode * findMax( BinaryNode *t ) const
+    {
+        if( t != nullptr )
+            while( t->right != nullptr )
+                t = t->right;
+        return t;
+    }
 
     /**
      * Internal method to test if an item is in a subtree.
@@ -172,16 +177,6 @@ class BinarySearchTree: public BinaryTree<Comparable>
         else
             return true;    // Match
     }
-
-
-
-
-
-
-
-
-
-
 };
 
 

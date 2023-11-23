@@ -7,6 +7,7 @@ class BinaryTree
 {
   public:
 
+
     BinaryTree( ) : root{ nullptr }
     {
     }
@@ -83,6 +84,7 @@ class BinaryTree
     }
 
 
+  protected:
 
     struct BinaryNode
     { 
@@ -97,7 +99,6 @@ class BinaryTree
           : element{ std::move( theElement ) }, left{ lt }, right{ rt } { }
     };
     
-
     BinaryNode *root;   
 
   private:

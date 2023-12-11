@@ -1,10 +1,19 @@
+#ifndef B_TREE_H  
+#define B_TREE_H 
+
 #include <algorithm>
+#include <iostream>
+
+// #define private public
 
 using namespace std;
+
 
 template <typename Comparable>
 class BinaryTree
 {
+
+
   public:
 
 
@@ -28,13 +37,6 @@ class BinaryTree
         rhs.root = nullptr;
     }
     
-    /**
-     * Destructor for the tree
-     */
-    ~BinaryTree( )
-    {
-        makeEmpty( );
-    }
 
     /**
      * Copy assignment
@@ -80,7 +82,16 @@ class BinaryTree
      */
     void makeEmpty( )
     {
+
         makeEmpty( root );
+    }
+
+    /**
+     * Destructor for the tree
+     */
+    ~BinaryTree( )
+    {
+        makeEmpty( );
     }
 
 
@@ -142,7 +153,7 @@ class BinaryTree
 };
 
 
-
+#endif
 
 
 

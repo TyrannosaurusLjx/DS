@@ -1,9 +1,8 @@
+# include "AT.h"
 # include<iostream>
-# include "alltree.h"
 
 
 int main(){
-
     int a,b,c,d;
     a = 1;
     b = 2;
@@ -22,10 +21,5 @@ int main(){
     std::cout<<T.isEmpty()<<"m"<<m<<std::endl; // 0
     T.makeEmpty();
     T.printTree();// empty
-
-
-
-
-    
 
 }

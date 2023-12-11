@@ -1,16 +1,12 @@
+# include "BST.h"
 # include<iostream>
-# include "alltree.h"
-
 
 int main(){
-
-    int a,b,c,d;
+    int a,b,c;
     a = 1;
-    b = 2;
-    c = 3;
-    d = 4;
-
-    AvlTree<int> T;
+    b = 9;
+    c = 5;
+    BinarySearchTree<int> T;
     T.insert(a);
     T.printTree(); // 1
     T.insert(9);
@@ -18,14 +14,9 @@ int main(){
     std::cout<<T.contains(b)<<std::endl; // 1
     T.insert(c);
     T.printTree(); // 1 5 9
-    int m = T.findMin();
-    std::cout<<T.isEmpty()<<"m"<<m<<std::endl; // 0
+    std::cout<<T.isEmpty()<<std::endl; // 0
     T.makeEmpty();
     T.printTree();// empty
 
-
-
-
-    
 
 }

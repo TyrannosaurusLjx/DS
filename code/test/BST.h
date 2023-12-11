@@ -2,6 +2,9 @@
 # include <algorithm>
 # include "../dsexceptions.h"
 
+// #define private public
+
+
 template <typename Comparable>
 class BinarySearchTree: public BinaryTree<Comparable>
 {

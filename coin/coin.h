@@ -1,5 +1,6 @@
 #include <vector>  
-  
+
+// dynamic programming
 std::vector<int> coin(int n, std::vector<int> &result) {  
     if (n >= 25) {  
         result[3] += n / 25;  

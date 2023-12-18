@@ -1,0 +1,75 @@
+\documentclass[12pt, a4paper, oneside]{ctexart}
+\usepackage{amsmath,extarrows, amsthm, amssymb, bm, graphicx, hyperref, geometry, mathrsfs,color}
+
+\title{\huge\textbf{硬币找零问题}}
+\author{罗俊勋}
+\date{\today}
+\linespread{2}%行间距
+\geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}%设置页面
+\CTEXsetup[format={\Large\bfseries}]{section}%section左对齐
+
+%定义环境
+\newenvironment{Def}[1][def-name]{\par\noindent{\textit{(#1):}\small}}{\\\par}
+\newenvironment{theorem}[1][Theorem-name]{\par\noindent \textbf{Theorem #1:}\textit}{\\\par}
+\newenvironment{corollary}[1][corollary-name]{\par\noindent \textbf{Corollary #1:}\textit}{\\\par\vspace*{15pt}}
+\newenvironment{lemma}[1][lemma-name]{\par\noindent \textbf{Lemma #1:}\textbf}{\\\par}
+\renewenvironment{proof}{\par\noindent{\textit{Proof:}\small}}{\\\par}
+\newenvironment{example}[1][example-name]{\par{\textbf{Example:}}}{\\\par}
+\newenvironment{say}{\center{\textit{summary:}}}{\\\par}
+\newenvironment{note}[1][note-name]{\par\textit{#1:}}{\\\par}
+\newcommand{\qie}{\enspace\&\enspace}
+
+
+\begin{document}
+\maketitle
+
+显然优先选择面值大的硬币能使得总硬币数最小
+$function:coin$
+
+\[  
+\begin{cases}  
+    \text{if } n \geq 25: \text{ 25面值硬币加}m \equiv n \mod 25 \\  
+    \begin{cases}  
+        \text{if } n \geq 10: \text{ 10面值硬币加}m \equiv n \mod 10 \\  
+        \begin{cases}  
+            \text{if } n \geq 5: \text{ 5面值硬币加}m \equiv n \mod 5 \\  
+            \text{else: 1面值硬币加}n  
+        \end{cases}  
+    \end{cases}  
+\end{cases}  
+\]  
+
+最后返回所有硬币个数的和
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+% \begin{figure}[p]
+
+%     \centerline{\includegraphics[width=1.2\linewidth,height=1.1\textheight]{name}}
+%     \caption{课上习题}
+%     \label{figure}
+
+%\end{figure}
+
+
+
+% \bibliographystyle{IEEEtran}
+% \bibliography{reference}
+
+
+
+\end{document}

@@ -7,7 +7,7 @@
       "request": "launch",
       "args": [],
       "cwd": "/Users/luojunxun/Desktop/DS/coin",
-      "program": "/Users/luojunxun/Desktop/DS/coin/build/Release/outRelease"
+      "program": "/Users/luojunxun/Desktop/DS/coin/build/Debug/outDebug"
     }
   ]
 }

@@ -1,21 +1,20 @@
 #include <iostream>
 #include"coin.h"
-#include<numeric>
+
 
 int main(){
-    std::vector<int>result(4, 0);
-   //examples for testing
-   std::vector<int>testN = {1,4,9,24,41,99,126};
-    std::cout<<"1 5 10 25"<<std::endl;
-    for(const auto &test: testN){
-        std::vector<int>X0(4,0);
-        result = coin(test, X0);
+    // 测试用例
+    std::vector<int>testTarget={30, 45, 100, 11, 1,311};
+    std::vector<std::vector<int>>testAmounts={{10, 2, 1, 4}, {1, 1, 1, 1}, {10, 10, 10, 10}, {5, 0, 0, 0}, {1, 0, 0, 0}, {7, 8, 9, 7}};
+    std::vector<int>answer={2, -1, 4, -1, 1, 30};
 
-        for (const auto &element : result) {  
-            std::cout << element << " ";  
-        }  
-
-    std::cout<< "total:"<<std::accumulate(result.begin(), result.end(), 0)<<std::endl;
+    for(int i = 0; i<testTarget.size(); i++){
+        int target = testTarget[i];
+        std::vector<int>amounts = testAmounts[i];
+        int result = coin(target, amounts);
+        std::cout<<"目标值:"<<target<<";";
+        std::cout<<"期望值:"<<answer[i]<<";";
+        std::cout<<"运行结果:"<<result<<std::endl;
     }
     return 0;
 }

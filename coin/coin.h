@@ -1,18 +1,19 @@
-#include <vector>  
+# include<vector>
+int coin(int target, std::vector<int>amounts){
+    std::vector<int>coins={1,5,10,25};
+    std::vector<int>dp(target+1, INT16_MAX);
+    dp[0]=0;
+    for(int j = 0; j < coins.size(); j++){
+        for(int k = 1; k<= amounts[j]; k++){
+            for(int i = target; i >= coins[j]; i--){
+                dp[i] = std::min(dp[i], dp[i-coins[j]] + 1);
+            }
+        }
+    }
+    if(dp[target] != INT16_MAX){
+        return dp[target];
+    }else{
+        return -1;
+    }
+}
 
-// dynamic programming
-std::vector<int> coin(int n, std::vector<int> &result) {  
-    if (n >= 25) {  
-        result[3] += n / 25;  
-        return coin(n % 25, result);  
-    } else if (n >= 10) {  
-        result[2] += n / 10;  
-        return coin(n % 10, result);  
-    } else if (n >= 5) {  
-        result[1] += n / 5;  
-        return coin(n % 5, result);  
-    } else {  
-        result[0] += n;  
-        return result;  
-    }  
-}  

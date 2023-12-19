@@ -23,23 +23,14 @@
 \begin{document}
 \maketitle
 
-显然优先选择面值大的硬币能使得总硬币数最小
-$function:coin$
+设计思路:vector::coins存储所有的币值类型,vector::amount存储每个硬币的个数,\\int target存储目标值,vector::dp长度为target+1,存储index=sometarget最小硬币数目和
 
-\[  
-\begin{cases}  
-    \text{if } n \geq 25: \text{ 25面值硬币加}m \equiv n \mod 25 \\  
-    \begin{cases}  
-        \text{if } n \geq 10: \text{ 10面值硬币加}m \equiv n \mod 10 \\  
-        \begin{cases}  
-            \text{if } n \geq 5: \text{ 5面值硬币加}m \equiv n \mod 5 \\  
-            \text{else: 1面值硬币加}n  
-        \end{cases}  
-    \end{cases}  
-\end{cases}  
-\]  
+逐个考察每个coin的币值:
+对面值为coins[i]的amount[i]个硬币,对整个dp数组,
+从后往前考察(相当于扫描整个数组)对dp的某一个节点添加一个面值为coins[i]的硬币看是否能够减少总的硬币数目,如果有就替换该处的值,
+由于币值为coins[i]的硬币只有amount[i]个,所以只能扫描amount[i]次(每次扫描在任意一处至多使用一次该硬币)
 
-最后返回所有硬币个数的和
+完成全部扫描后取dp[target]处的值即可
 
 
 
@@ -52,23 +43,6 @@ $function:coin$
 
 
 
-
-
-
-
-
-% \begin{figure}[p]
-
-%     \centerline{\includegraphics[width=1.2\linewidth,height=1.1\textheight]{name}}
-%     \caption{课上习题}
-%     \label{figure}
-
-%\end{figure}
-
-
-
-% \bibliographystyle{IEEEtran}
-% \bibliography{reference}
 
 
 

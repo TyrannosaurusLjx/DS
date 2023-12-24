@@ -1,7 +1,7 @@
 #ifndef BINARY_SEARCH_TREE_H
 #define BINARY_SEARCH_TREE_H
 
-#include "../dsexceptions.h"
+#include "dsexceptions.h"
 #include <algorithm>
 using namespace std;       
 

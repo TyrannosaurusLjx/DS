@@ -1,22 +1,12 @@
-#ifndef B_TREE_H  
-#define B_TREE_H 
-
 #include <algorithm>
-#include <iostream>
+#include<iostream>
 
-// #define private public
-
-using namespace std;
-
+#include"../dsexceptions.h"
 
 template <typename Comparable>
 class BinaryTree
 {
-
-
   public:
-
-
     BinaryTree( ) : root{ nullptr }
     {
     }
@@ -61,7 +51,7 @@ class BinaryTree
      * Test if the tree is logically empty.
      * Return true if empty, false otherwise.
      */
-    bool isEmpty( ) const
+    virtual bool isEmpty( ) const
     {
         return root == nullptr;
     }
@@ -69,20 +59,19 @@ class BinaryTree
     /**
      * Print the tree contents in sorted order.
      */
-    void printTree( ostream & out = cout ) const
+    virtual void printTree(  ) const
     {
         if( isEmpty( ) )
-            out << "Empty tree" << endl;
+            std::cout << "Empty tree" << std::endl;
         else
-            printTree( root, out );
+            printTree( root );
     }
 
     /**
      * Make the tree logically empty.
      */
-    void makeEmpty( )
+    virtual void makeEmpty( )
     {
-
         makeEmpty( root );
     }
 
@@ -96,7 +85,6 @@ class BinaryTree
 
 
   protected:
-
     struct BinaryNode
     { 
         Comparable element;
@@ -109,7 +97,6 @@ class BinaryTree
         BinaryNode( Comparable && theElement, BinaryNode *lt, BinaryNode *rt )
           : element{ std::move( theElement ) }, left{ lt }, right{ rt } { }
     };
-    
     BinaryNode *root;   
 
     
@@ -127,13 +114,13 @@ class BinaryTree
     /**
      * Internal method to print a subtree rooted at t in sorted order.
      */
-    void printTree( BinaryNode *t, ostream & out ) const
+    void printTree( BinaryNode *t ) const
     {
         if( t != nullptr )
         {
-            printTree( t->left, out );
-            out << t->element << endl;
-            printTree( t->right, out );
+            printTree( t->left );
+            std::cout << t->element << std::endl;
+            printTree( t->right );
         }
     }
 
@@ -148,11 +135,3 @@ class BinaryTree
             return new BinaryNode{ t->element, clone( t->left ), clone( t->right ) };
     }
 };
-
-
-#endif
-
-
-
-
-
